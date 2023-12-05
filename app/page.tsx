@@ -1,7 +1,9 @@
 import { IssueOrPR } from "@/components/issue-or-pr";
-import Image from "next/image";
+import { getGitHubIssuesAndPRs } from "@/lib/get-github-data";
 
-export default function Home() {
+export default async function Home() {
+  const projectData = await getGitHubIssuesAndPRs([]);
+  console.log({ projectData });
   return (
     <main>
       <div className="flex flex-row justify-start flex-wrap px-2">

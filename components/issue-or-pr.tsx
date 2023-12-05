@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 
 export function IssueOrPR() {
   return (
-    <Card className="m-2 bg-gradient-to-r from-pink-100 to-yellow-100 dark:from-gray-700 dark:to-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col items-start p-6 text-gray-800 dark:text-gray-200">
+    <Card className="m-2 w-96 bg-gradient-to-r from-pink-100 to-yellow-100 dark:from-gray-700 dark:to-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col items-start p-6 text-gray-800 dark:text-gray-200">
       <div className="flex items-center space-x-1 mb-1">
         <IconAlertcircle className="h-5 w-5 text-gray-500 dark:text-gray-400" />
         <h3 className="text-md font-bold text-gray-600 dark:text-gray-400 uppercase">
@@ -22,34 +22,30 @@ export function IssueOrPR() {
       <div className="space-y-1">
         <h2 className="text-xl font-bold w-full">Pull Request Title</h2>
         <p className="w-full text-sm">
-          Opened by{" "}
           <Link
             className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"
             href="#"
           >
             User Name
           </Link>{" "}
-          on Dec 6, 2023, 4:12pm
+          Dec 6, 2023, 4:12pm
+        </p>
+        <p className="text-sm">
+          <span className="font-semibold text-gray-600 dark:text-gray-400">
+            10
+          </span>{" "}
+          comments
         </p>
         <div className="mt-3 space-y-1 flex flex-col items-baseline">
           <p className="text-sm">
-            Most recent comment:{" "}
-            <span className="font-semibold text-gray-600 dark:text-gray-400">
-              Dec 6, 2023, 8:15 PM
-            </span>{" "}
-            by{" "}
+            Last by{" "}
             <Link
               className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"
               href="#"
             >
               Comment Author
-            </Link>
-          </p>
-          <p className="text-sm">
-            Number of comments:{" "}
-            <span className="font-semibold text-gray-600 dark:text-gray-400">
-              10
-            </span>
+            </Link>{" "}
+            Dec 6, 2023, 8:15 PM
           </p>
         </div>
       </div>
