@@ -4,7 +4,6 @@
  */
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CardContent, Card } from "@/components/ui/card";
 
 export function Repositories() {
   return (
@@ -37,7 +36,7 @@ export function Repositories() {
   );
 }
 
-function IconPlus(props) {
+function IconPlus(props: any) {
   return (
     <svg
       {...props}
