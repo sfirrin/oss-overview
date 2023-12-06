@@ -31,10 +31,9 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
   const responses = await Promise.all(requests);
 
   const issuesAndPrs: IssueOrPR[] = [];
-  const prs = [];
 
   for (let response of responses) {
-    console.log(response);
+    // console.log(response);
     const queryUrl = response.url;
     const splitQueryUrl = queryUrl.split("/");
 
@@ -56,7 +55,7 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
         repoOwner,
       };
       issuesAndPrs.push(issueOrPRData);
-      console.log({ issueOrPRData });
+      // console.log({ issueOrPRData });
     }
   }
   issuesAndPrs.sort((a, b) => b.createdAt - a.createdAt);

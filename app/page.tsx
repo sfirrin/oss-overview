@@ -1,13 +1,21 @@
 import { IssueOrPRCard } from "@/components/issue-or-pr";
 import { IssueOrPR, getGitHubIssuesAndPRs } from "@/lib/get-github-data";
 
-export default async function Home() {
-  const projectData = await getGitHubIssuesAndPRs([
-    // TODO Get from URL search params
-    "DataDog/serverless-plugin-datadog",
-    "DataDog/datadog-cdk-constructs",
-    "DataDog/datadog-cloudformation-macro",
-  ]);
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { repo: string | string[] | undefined };
+}) {
+  const { repo: repoParam } = searchParams;
+  const repos = repoParam
+    ? Array.isArray(repoParam)
+      ? repoParam
+      : [repoParam]
+    : [];
+
+  console.log({ repos });
+
+  const projectData = await getGitHubIssuesAndPRs(repos);
 
   return (
     <main className="mt-3">
