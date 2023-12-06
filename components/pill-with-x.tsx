@@ -3,14 +3,23 @@
  * @see https://v0.dev/t/mUJGRo00WeI
  */
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export function PillWithX({ label }: { label: string }) {
+export function PillWithX({
+  label,
+  xButtonHref,
+}: {
+  label: string;
+  xButtonHref: string;
+}) {
   return (
     <div className="inline-flex items-center justify-center px-2 py-1 text-sm font-semibold text-black bg-white border border-black rounded-md">
       {label}
-      <Button className="ml-2 h-5 w-5 p-1" variant="ghost">
-        <IconX className="w-3 h-3" />
-      </Button>
+      <Link href={xButtonHref}>
+        <Button className="ml-2 h-5 w-5 p-1" variant="ghost">
+          <IconX className="w-3 h-3" />
+        </Button>
+      </Link>
     </div>
   );
 }

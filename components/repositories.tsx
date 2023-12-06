@@ -28,7 +28,12 @@ export function Repositories() {
     <div className="flex">
       <div className="flex overflow-x-auto items-center gap-2 flex-wrap">
         {repos.map((repo) => {
-          return <PillWithX key={repo} label={repo} />;
+          const urlWithoutRepo = `/?repo=${repos
+            .filter((r) => r !== repo)
+            .join("&repo=")}`;
+          return (
+            <PillWithX key={repo} label={repo} xButtonHref={urlWithoutRepo} />
+          );
         })}
       </div>
       <div className="flex ml-2 items-center">
