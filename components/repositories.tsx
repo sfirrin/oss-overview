@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { PillWithX } from "./pill-with-x";
 
 export function Repositories() {
-  // TODO get from URL
+  // TODO get from URL query params
   const repos = [
     "DataDog/serverless-plugin-datadog",
     "DataDog/datadog-cdk-constructs",
