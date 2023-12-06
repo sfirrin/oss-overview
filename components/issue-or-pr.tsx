@@ -39,13 +39,13 @@ export function IssueOrPRCard({ issueOrPR }: { issueOrPR: IssueOrPR }) {
             {issueOrPR.title}
           </h2>
           <p className="w-full text-sm">
-            <span className="underline text-gray-500">
+            {new Date(issueOrPR.createdAt).toLocaleDateString()}{" "}
+            <span className="underline text-gray-600">
               {issueOrPR.createdBy}
             </span>{" "}
-            <span className="font-semibold text-xs bg-gray-400 text-white rounded-full py-0.5 px-2">
+            <span className="font-semibold text-xs border border-gray-600 text-gray-600 rounded-full py-0.5 px-2">
               {issueOrPR.isInternal ? "Contributor" : "External"}
-            </span>{" "}
-            {new Date(issueOrPR.createdAt).toLocaleDateString()}
+            </span>
           </p>
           <p className="text-sm">
             <span className="font-semibold text-gray-600 dark:text-gray-400">
