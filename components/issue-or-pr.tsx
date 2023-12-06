@@ -39,8 +39,11 @@ export function IssueOrPRCard({ issueOrPR }: { issueOrPR: IssueOrPR }) {
             {issueOrPR.title}
           </h2>
           <p className="w-full text-sm">
-            <span className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400">
+            <span className="underline text-gray-500">
               {issueOrPR.createdBy}
+            </span>{" "}
+            <span className="font-semibold text-xs bg-gray-400 text-white rounded-full py-0.5 px-2">
+              {issueOrPR.isInternal ? "Contributor" : "External"}
             </span>{" "}
             {new Date(issueOrPR.createdAt).toLocaleDateString()}
           </p>
