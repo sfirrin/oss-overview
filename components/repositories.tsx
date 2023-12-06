@@ -33,7 +33,7 @@ export function Repositories() {
           type="text"
         />
         <Button
-          className="border border-gray-300 dark:border-gray-700"
+          className="p0 border border-gray-300 dark:border-gray-700"
           type="submit"
           variant="ghost"
         >

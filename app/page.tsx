@@ -1,5 +1,6 @@
 import { IssueOrPRCard } from "@/components/issue-or-pr";
 import { IssueOrPR, getGitHubIssuesAndPRs } from "@/lib/get-github-data";
+import Link from "next/link";
 
 export default async function Home({
   searchParams,
@@ -14,6 +15,24 @@ export default async function Home({
     : [];
 
   console.log({ repos });
+
+  if (repos.length === 0) {
+    return (
+      <main className="mt-3">
+        <h2 className="px-2 text-2xl font-bold w-full">No repos entered yet</h2>
+        <span className="pt-1 px-2 text-gray-600 dark:text-gray-400 italic font-light">
+          Please enter at least one repo in the header, or click{" "}
+          <Link
+            className="underline"
+            href="/?repo=DataDog/serverless-plugin-datadog&repo=DataDog/datadog-cdk-constructs&repo=DataDog/datadog-cloudformation-macro"
+          >
+            here
+          </Link>{" "}
+          to see an example
+        </span>
+      </main>
+    );
+  }
 
   const projectData = await getGitHubIssuesAndPRs(repos);
 

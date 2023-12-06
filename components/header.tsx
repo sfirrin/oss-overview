@@ -8,7 +8,7 @@ import { Repositories } from "./repositories";
 export function Header() {
   return (
     <header className="flex items-center justify-between px-4 py-2 border-b-2 border-black">
-      <h1 className="text-3xl font-bold text-black">OSS Project Overview</h1>
+      <h1 className="text-3xl font-bold text-black">OSS Overview</h1>
       <Repositories />
     </header>
   );
