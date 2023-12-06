@@ -4,52 +4,64 @@
  */
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import { IssueOrPR } from "@/lib/get-github-data";
 
-export function IssueOrPR() {
+export function IssueOrPRCard({ issueOrPR }: { issueOrPR: IssueOrPR }) {
   return (
-    <Card className="m-2 w-96 bg-gradient-to-r from-pink-100 to-yellow-100 dark:from-gray-700 dark:to-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col items-start p-6 text-gray-800 dark:text-gray-200">
-      <div className="flex items-center space-x-1 mb-1">
-        <IconAlertcircle className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-        <h3 className="text-md font-bold text-gray-600 dark:text-gray-400 uppercase">
-          <Link
-            className="hover:text-gray-700 dark:hover:text-gray-500"
-            href="#"
-          >
-            Repository Name
-          </Link>
-        </h3>
-      </div>
-      <div className="space-y-1">
-        <h2 className="text-xl font-bold w-full">Pull Request Title</h2>
-        <p className="w-full text-sm">
-          <Link
-            className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"
-            href="#"
-          >
-            User Name
-          </Link>{" "}
-          Dec 6, 2023, 4:12pm
-        </p>
-        <p className="text-sm">
-          <span className="font-semibold text-gray-600 dark:text-gray-400">
-            10
-          </span>{" "}
-          comments
-        </p>
-        <div className="mt-3 space-y-1 flex flex-col items-baseline">
-          <p className="text-sm">
-            Last by{" "}
-            <Link
-              className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400"
-              href="#"
-            >
-              Comment Author
-            </Link>{" "}
-            Dec 6, 2023, 8:15 PM
-          </p>
+    <Link
+      className="block"
+      href={issueOrPR.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Card
+        className={`m-2 w-96 bg-gradient-to-r ${
+          issueOrPR.type === "issue"
+            ? "from-pink-100 to-yellow-100"
+            : "from-blue-100 to-green-100"
+        } dark:from-gray-700 dark:to-gray-800 rounded-xl shadow-md overflow-hidden flex flex-col items-start p-6 text-gray-800 dark:text-gray-200 hover:shadow-lg transition-shadow duration-300`}
+      >
+        <div className="flex items-center space-x-1 mb-1">
+          {issueOrPR.type === "issue" && (
+            <IconAlertcircle className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          )}
+          {issueOrPR.type === "pr" && (
+            <IconPullRequest className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+          )}
+          <h3 className="text-md font-bold text-gray-600 dark:text-gray-400 uppercase">
+            <span className="hover:text-gray-700 dark:hover:text-gray-500">
+              {issueOrPR.repoName}
+            </span>
+          </h3>
         </div>
-      </div>
-    </Card>
+        <div className="space-y-1">
+          <h2 className="line-clamp-2 text-xl font-bold w-full">
+            {issueOrPR.title}
+          </h2>
+          <p className="w-full text-sm">
+            <span className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400">
+              {issueOrPR.createdBy}
+            </span>{" "}
+            {new Date(issueOrPR.createdAt).toLocaleDateString()}
+          </p>
+          <p className="text-sm">
+            <span className="font-semibold text-gray-600 dark:text-gray-400">
+              {issueOrPR.commentCount}
+            </span>{" "}
+            comment{issueOrPR.commentCount === 1 ? "" : "s"}
+          </p>
+          {/* <div className="mt-3 space-y-1 flex flex-col items-baseline">
+            <p className="text-sm">
+              Last by{" "}
+              <span className="underline text-gray-500 hover:text-gray-600 dark:hover:text-gray-400">
+                Comment Author
+              </span>{" "}
+              {issueOrPR.lastCommentAt.toLocaleDateString()}
+            </p>
+          </div> */}
+        </div>
+      </Card>
+    </Link>
   );
 }
 
@@ -70,6 +82,28 @@ function IconAlertcircle({ className }: { className: string }) {
       <circle cx="12" cy="12" r="10" />
       <line x1="12" x2="12" y1="8" y2="12" />
       <line x1="12" x2="12.01" y1="16" y2="16" />
+    </svg>
+  );
+}
+
+function IconPullRequest(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="18" cy="18" r="3" />
+      <circle cx="6" cy="6" r="3" />
+      <path d="M13 6h3a2 2 0 0 1 2 2v7" />
+      <line x1="6" x2="6" y1="9" y2="21" />
     </svg>
   );
 }
