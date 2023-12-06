@@ -23,7 +23,6 @@ export function Repositories() {
     "&repo="
   )}&repo=${textBoxContent.replace("https://github.com/", "")}`;
 
-  console.log({ textBoxContent });
   return (
     <div className="flex">
       <div className="flex overflow-x-auto items-center gap-2 flex-wrap">
@@ -52,7 +51,10 @@ export function Repositories() {
             className="hover:bg-gray-200"
             type="submit"
             variant="ghost"
-            disabled={textBoxContent === ""}
+            disabled={
+              !textBoxContent.startsWith("https://github.com/") ||
+              repos.includes(textBoxContent.replace("https://github.com/", ""))
+            }
           >
             <IconPlus className="w-4 h-4 text-gray-500 " />
           </Button>

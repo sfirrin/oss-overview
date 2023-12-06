@@ -23,6 +23,7 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
     const issues = octokit.request("GET /repos/{owner}/{repo}/issues", {
       owner,
       repo,
+      state: "open",
     });
 
     requests.push(issues);
@@ -33,7 +34,6 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
   const issuesAndPrs: IssueOrPR[] = [];
 
   for (let response of responses) {
-    // console.log(response);
     const queryUrl = response.url;
     const splitQueryUrl = queryUrl.split("/");
 
@@ -55,7 +55,6 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
         repoOwner,
       };
       issuesAndPrs.push(issueOrPRData);
-      // console.log({ issueOrPRData });
     }
   }
   issuesAndPrs.sort((a, b) => b.createdAt - a.createdAt);
