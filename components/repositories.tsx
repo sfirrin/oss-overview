@@ -8,37 +8,50 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PillWithX } from "./pill-with-x";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
 
 export function Repositories() {
   const searchParams = useSearchParams();
   const reposParam = searchParams.getAll("repo") ?? [];
 
   const repos = Array.isArray(reposParam) ? reposParam : [reposParam];
-  console.log({ repos });
-  // const repos = [
-  //   "DataDog/serverless-plugin-datadog",
-  //   "DataDog/datadog-cdk-constructs",
-  //   "DataDog/datadog-cloudformation-macro",
-  // ];
+
+  const [textBoxContent, setTextBoxContent] = useState("");
+
+  const urlWithNewRepo = `/?repo=${repos.join(
+    "&repo="
+  )}&repo=${textBoxContent.replace("https://github.com/", "")}`;
+
+  console.log({ textBoxContent });
   return (
-    <div>
-      <div className="flex overflow-x-auto items-center gap-2">
+    <div className="flex">
+      <div className="flex overflow-x-auto items-center gap-2 flex-wrap">
         {repos.map((repo) => (
           <PillWithX key={repo} label={repo} />
         ))}
+      </div>
+      <div className="flex ml-2 items-center">
         <Input
-          className="w-32 mr-1"
+          size={1}
+          className="w-40 mr-1"
           id="new-item"
           placeholder="Add repo URL"
           type="text"
+          value={textBoxContent}
+          onChange={(e) => setTextBoxContent(e.target.value)}
         />
-        <Button
-          className="p0 border border-gray-300 dark:border-gray-700"
-          type="submit"
-          variant="ghost"
-        >
-          <IconPlus className="w-4 h-4 text-gray-500" />
-        </Button>
+        <Link href={textBoxContent === "" ? "#" : urlWithNewRepo}>
+          <Button
+            size="sm"
+            className="hover:bg-gray-200"
+            type="submit"
+            variant="ghost"
+            disabled={textBoxContent === ""}
+          >
+            <IconPlus className="w-4 h-4 text-gray-500 " />
+          </Button>
+        </Link>
       </div>
     </div>
   );

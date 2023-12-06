@@ -19,12 +19,12 @@ export default async function Home({
   if (repos.length === 0) {
     return (
       <main className="mt-3">
-        <h2 className="px-2 text-2xl font-bold w-full">No repos entered yet</h2>
-        <span className="pt-1 px-2 text-gray-600 dark:text-gray-400 italic font-light">
+        <h2 className="px-4 text-2xl font-bold w-full">No repos entered yet</h2>
+        <span className="pt-1 px-4 text-gray-600 dark:text-gray-400 italic font-light">
           Please enter at least one repo in the header, or click{" "}
           <Link
             className="underline"
-            href="/?repo=DataDog/serverless-plugin-datadog&repo=DataDog/datadog-cdk-constructs&repo=DataDog/datadog-cloudformation-macro"
+            href="/?repo=DataDog/serverless-plugin-datadog&repo=DataDog/datadog-cdk-constructs&repo=DataDog/datadog-cloudformation-macro&repo=DataDog/datadog-lambda-js&repo=DataDog/datadog-lambda-python&repo=DataDog/datadog-lambda-java&repo=DataDog/datadog-lambda-rb&repo=DataDog/datadog-lambda-extension"
           >
             here
           </Link>{" "}
