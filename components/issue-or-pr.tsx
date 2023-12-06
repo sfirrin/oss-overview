@@ -15,7 +15,7 @@ export function IssueOrPRCard({ issueOrPR }: { issueOrPR: IssueOrPR }) {
       rel="noopener noreferrer"
     >
       <Card
-        className={`m-2 w-96 bg-gradient-to-r ${
+        className={`m-2 w-[390px] bg-gradient-to-r ${
           issueOrPR.type === "issue"
             ? "from-pink-100 to-yellow-100"
             : "from-blue-100 to-green-100"
