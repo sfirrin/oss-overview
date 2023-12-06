@@ -3,6 +3,7 @@ import { IssueOrPR, getGitHubIssuesAndPRs } from "@/lib/get-github-data";
 
 export default async function Home() {
   const projectData = await getGitHubIssuesAndPRs([
+    // TODO Get from URL search params
     "DataDog/serverless-plugin-datadog",
     "DataDog/datadog-cdk-constructs",
     "DataDog/datadog-cloudformation-macro",
