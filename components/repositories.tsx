@@ -19,9 +19,12 @@ export function Repositories() {
 
   const [textBoxContent, setTextBoxContent] = useState("");
 
-  const urlWithNewRepo = `/?repo=${repos.join(
-    "&repo="
-  )}&repo=${textBoxContent.replace("https://github.com/", "")}`;
+  const newRepo = textBoxContent.replace("https://github.com/", "");
+
+  const urlWithNewRepo =
+    repos.length === 0
+      ? `/?repo=${newRepo}`
+      : `/?repo=${repos.join("&repo=")}&repo=${newRepo}`;
 
   return (
     <div className="flex">
