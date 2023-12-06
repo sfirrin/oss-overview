@@ -46,7 +46,7 @@ export default async function Home({
       />
       <IssueTimeGroup
         timeFrameName="Past 3 months"
-        issues={projectData.pastMonth}
+        issues={projectData.pastThreeMonths}
       />
       <IssueTimeGroup
         timeFrameName="Older than 3 months"

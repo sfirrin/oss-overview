@@ -27,9 +27,9 @@ export function Repositories() {
   return (
     <div className="flex">
       <div className="flex overflow-x-auto items-center gap-2 flex-wrap">
-        {repos.map((repo) => (
-          <PillWithX key={repo} label={repo} />
-        ))}
+        {repos.map((repo) => {
+          return <PillWithX key={repo} label={repo} />;
+        })}
       </div>
       <div className="flex ml-2 items-center">
         <Input
