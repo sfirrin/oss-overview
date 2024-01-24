@@ -23,6 +23,7 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
   const ctxWithEnv = ctx.setValue(ENV_KEY, "prod").setValue(api.createContextKey("hello_stephen"), "stephen");
 
   return api.context.with(ctxWithEnv, async () => {
+    console.log("Logging from within the context. Env key value: ", api.context.active().getValue(ENV_KEY))
     const requests = [];
 
     for (let projectName of projectNames) {
