@@ -1,4 +1,7 @@
 import { octokit } from "./octokit";
+import * as api from "@opentelemetry/api";
+
+const ENV_KEY = api.createContextKey("env");
 
 export interface IssueOrPR {
   title: string;
@@ -15,52 +18,57 @@ export interface IssueOrPR {
 }
 
 export async function getGitHubIssuesAndPRs(projectNames: string[]) {
-  const requests = [];
+  const ctx = api.context.active();
+  const ctxWithEnv = ctx.setValue(ENV_KEY, "prod");
 
-  for (let projectName of projectNames) {
-    const [owner, repo] = projectName.split("/");
+  return api.context.with(ctxWithEnv, async () => {
+    const requests = [];
 
-    const issues = octokit.request("GET /repos/{owner}/{repo}/issues", {
-      owner,
-      repo,
-      state: "open",
-    });
+    for (let projectName of projectNames) {
+      const [owner, repo] = projectName.split("/");
 
-    requests.push(issues);
-  }
+      const issues = octokit.request("GET /repos/{owner}/{repo}/issues", {
+        owner,
+        repo,
+        state: "open",
+      });
 
-  const responses = await Promise.all(requests);
-
-  const issuesAndPrs: IssueOrPR[] = [];
-
-  for (let response of responses) {
-    const queryUrl = response.url;
-    const splitQueryUrl = queryUrl.split("/");
-
-    const repoName = splitQueryUrl[splitQueryUrl.length - 2];
-    const repoOwner = splitQueryUrl[splitQueryUrl.length - 3];
-
-    for (let issueOrPR of response.data) {
-      const issueOrPRData: IssueOrPR = {
-        title: issueOrPR.title,
-        url: issueOrPR.html_url,
-        type: (issueOrPR as any).pull_request ? "pr" : "issue",
-        createdBy: issueOrPR.user?.login ?? "unknown",
-        createdAt: Date.parse(issueOrPR.created_at),
-        commentCount: (issueOrPR as any).comments,
-        isInternal: issueOrPR.author_association !== "NONE",
-        // lastCommentAt: Date.parse(issueOrPR.updated_at),
-        // lastCommentBy: "lastCommentBy",
-        repoName,
-        repoOwner,
-      };
-      issuesAndPrs.push(issueOrPRData);
+      requests.push(issues);
     }
-  }
-  issuesAndPrs.sort((a, b) => b.createdAt - a.createdAt);
 
-  const groupedByTimeFrame = groupIssuesAndPrsByTimeFrame(issuesAndPrs);
-  return groupedByTimeFrame;
+    const responses = await Promise.all(requests);
+
+    const issuesAndPrs: IssueOrPR[] = [];
+
+    for (let response of responses) {
+      const queryUrl = response.url;
+      const splitQueryUrl = queryUrl.split("/");
+
+      const repoName = splitQueryUrl[splitQueryUrl.length - 2];
+      const repoOwner = splitQueryUrl[splitQueryUrl.length - 3];
+
+      for (let issueOrPR of response.data) {
+        const issueOrPRData: IssueOrPR = {
+          title: issueOrPR.title,
+          url: issueOrPR.html_url,
+          type: (issueOrPR as any).pull_request ? "pr" : "issue",
+          createdBy: issueOrPR.user?.login ?? "unknown",
+          createdAt: Date.parse(issueOrPR.created_at),
+          commentCount: (issueOrPR as any).comments,
+          isInternal: issueOrPR.author_association !== "NONE",
+          // lastCommentAt: Date.parse(issueOrPR.updated_at),
+          // lastCommentBy: "lastCommentBy",
+          repoName,
+          repoOwner,
+        };
+        issuesAndPrs.push(issueOrPRData);
+      }
+    }
+    issuesAndPrs.sort((a, b) => b.createdAt - a.createdAt);
+
+    const groupedByTimeFrame = groupIssuesAndPrsByTimeFrame(issuesAndPrs);
+    return groupedByTimeFrame;
+  });
 }
 
 const groupIssuesAndPrsByTimeFrame = (issuesAndPrs: IssueOrPR[]) => {
