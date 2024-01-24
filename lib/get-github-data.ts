@@ -19,7 +19,7 @@ export interface IssueOrPR {
 
 export async function getGitHubIssuesAndPRs(projectNames: string[]) {
   const ctx = api.context.active();
-  const ctxWithEnv = ctx.setValue(ENV_KEY, "prod");
+  const ctxWithEnv = ctx.setValue(ENV_KEY, "prod").setValue(api.createContextKey("hello_stephen"), "stephen");
 
   return api.context.with(ctxWithEnv, async () => {
     const requests = [];
