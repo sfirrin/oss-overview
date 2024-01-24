@@ -1,8 +1,6 @@
 import { octokit } from "./octokit";
 import * as api from "@opentelemetry/api";
 
-const ENV_KEY = api.createContextKey("env");
-
 export interface IssueOrPR {
   title: string;
   url: string;
@@ -16,6 +14,9 @@ export interface IssueOrPR {
   repoOwner: string;
   isInternal: boolean;
 }
+
+
+const ENV_KEY = api.createContextKey("deployment.environment");
 
 export async function getGitHubIssuesAndPRs(projectNames: string[]) {
   const ctx = api.context.active();
