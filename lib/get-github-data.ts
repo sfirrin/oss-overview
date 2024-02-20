@@ -64,7 +64,11 @@ export async function getGitHubIssuesAndPRs(projectNames: string[]) {
 
   console.log("Found "  + issuesAndPrs.length + " issues and PRs")
 
+  console.error("This is a error message")
   console.warn("This is a warning message")
+  console.info("This is a info message")
+  console.log("This is a log message")
+  console.debug("This is a debug message")
 
   const groupedByTimeFrame = groupIssuesAndPrsByTimeFrame(issuesAndPrs);
   return groupedByTimeFrame;
