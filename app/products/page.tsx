@@ -2,7 +2,9 @@ import { cookies } from 'next/headers'
 
 
 export default function Page () {
+
     const cookieStore = cookies();
+    console.log("Hello")
     const productCount = (undefined as any).products.length;
 
     return (
